@@ -18,10 +18,10 @@ $ cp .example.env .env
 
 ```bash
 # development in watch mode
-$ npm run docker:debug
+$ yarn docker:debug
 
 # production WIP
-$ npm run docker:staging
+$ yarn docker:staging
 ```
 
 ## Test
