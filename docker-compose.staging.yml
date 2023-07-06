@@ -1,0 +1,112 @@
+version: '3.7'
+
+services:
+  api-service:
+    container_name: api-service
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway-service/Dockerfile
+      target: production
+    volumes:
+      - .:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+    env_file:
+      - ./apps/api-gateway-service/.env
+    environment:
+      - API_HOST
+      - API_PORT
+    ports:
+      - ${API_PORT}:${API_PORT}
+    depends_on:
+      - auth-service
+      - user-service
+      - notification-service
+      - mongodb
+    networks:
+      - backend
+    command: npm run start:dev api-gateway-service
+    restart: always
+  auth-service:
+    container_name: auth-service
+    build:
+      context: .
+      dockerfile: ./apps/auth-service/Dockerfile
+      target: production
+    volumes:
+      - .:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+    env_file:
+      - ./apps/auth-service/.env
+    environment:
+      - AUTH_HOST
+      - AUTH_PORT
+    ports:
+      - ${AUTH_PORT}:${AUTH_PORT}
+    networks:
+      - backend
+    command: npm run start:dev auth-service
+    restart: always
+  user-service:
+    build:
+      context: .
+      dockerfile: ./apps/user-service/Dockerfile
+      target: production
+    volumes:
+      - .:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+    env_file:
+      - ./apps/user-service/.env
+    environment:
+      - USER_HOST
+      - USER_PORT
+      - USER_TCP_PORT
+    ports:
+      - ${USER_PORT}:${USER_PORT}
+    depends_on:
+      - mongodb
+    networks:
+      - backend
+    command: npm run start:dev user-service
+    restart: always
+  notification-service:
+    container_name: notification-service
+    build:
+      context: .
+      dockerfile: ./apps/notification-service/Dockerfile
+      target: production
+    volumes:
+      - .:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+    env_file:
+      - ./apps/notification-service/.env
+    environment:
+      - NOTIFICATION_HOST
+      - NOTIFICATION_PORT
+    ports:
+      - ${NOTIFICATION_PORT}:${NOTIFICATION_PORT}
+    networks:
+      - backend
+    command: npm run start:dev notification-service
+    restart: always
+  mongodb:
+    container_name: mongo
+    image: mongo:5.0.15
+    ports:
+      - '27017:27017'
+    networks:
+      - backend
+    restart: always
+    volumes:
+      - ./data:/data/db
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - '6379:6379'
+    networks:
+      - backend
+    restart: always
+    volumes:
+      - ./data:/data/redis
+networks:
+  backend:

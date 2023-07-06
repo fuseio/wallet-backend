@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  api-service:
+    command: npm run start:debug --service=api-gateway-service --port=9225
+  auth-service:
+    command: npm run start:debug --service=auth-service --port=9226
+  user-service:
+    command: npm run start:debug --service=user-service --port=9227
+  notification-service:
+    command: npm run start:debug --service=notification-service --port=9228
