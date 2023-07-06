@@ -1,7 +1,7 @@
 # Wallet Backend API
 
 ## Description
-The voltage backend api 
+A boilerplate backend infrastructure for the Fuse wallet.
 
 ## Installation
 
