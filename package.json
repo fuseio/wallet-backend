@@ -2,9 +2,10 @@
   "name": "wallet-backend",
   "version": "0.0.1",
   "description": "A boilerplate backend infrastructure for the Fuse wallet.",
-  "author": "mul53",
-  "private": true,
-  "license": "UNLICENSED",
+  "homepage": "https://fuse.io/sdk",
+  "author": "Fuse",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "build": "nest build api-gateway-service && nest build auth-service && nest build notification-service && nest build user-service",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
