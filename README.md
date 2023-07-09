@@ -44,9 +44,7 @@ Next, we need to add our Firebase project values, which can be found in the prev
 
 `FIREBASE_CLIENT_EMAIL` should be set to the value of `client_email`.
 
-`FUSE_SECRET_KEY` can be found in your project on Fuse developers platform.
-
-`FUSE_PUBLIC_API_KEY` can be found in your project on Fuse developers platform.
+You can find `FUSE_SECRET_KEY` and `FUSE_PUBLIC_API_KEY` in your project on the Fuse developers platform.
 
 To create a webhook for the Fuse project you have created, follow these steps:
 
