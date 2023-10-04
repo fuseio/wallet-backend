@@ -8,7 +8,6 @@ import {
   GetUserDto,
   UpdateUserDto,
 } from '../../dtos';
-import { CreateReferralDto } from '../../dtos/user/create-referral.dto';
 import { User } from '../../entities';
 import { BaseClientProxy } from '../base-client-proxy';
 import { DeleteFCMTokenDto } from '../../dtos/user/delete-fcm-token.dto';
@@ -45,10 +44,6 @@ export class UserClientProxy extends BaseClientProxy {
 
   deleteUser(deleteUserDto: DeleteUserDto) {
     return this.send('delete_user', deleteUserDto);
-  }
-
-  createReferral(createReferralDto: CreateReferralDto) {
-    return this.send('create_referral', createReferralDto);
   }
 
   deleteFCMToken(deleteFCMTokenDto: DeleteFCMTokenDto) {

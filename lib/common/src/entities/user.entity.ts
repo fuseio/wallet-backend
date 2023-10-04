@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Referral } from './referral.entity';
+import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class User extends Document {
@@ -13,9 +12,6 @@ export class User extends Document {
   @Prop({ unique: true })
   phoneNumber: string;
 
-  @Prop({ unique: true })
-  referrerAddress: string;
-
   @Prop()
   avatarURL: string;
 
@@ -27,9 +23,6 @@ export class User extends Document {
 
   @Prop()
   fcmTokens: string[];
-
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Referral' })
-  referrals: Referral[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
