@@ -1,0 +1,359 @@
+{
+	"info": {
+		"_postman_id": "e3523a49-a648-4c94-88a3-c00957ed032c",
+		"name": "Fuse Wallet Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24929470",
+		"_collection_link": "https://fuselabs.postman.co/workspace/Team-Workspace~dcdd431e-9a1c-4471-8339-bbbf8abe0cb4/collection/24929470-e3523a49-a648-4c94-88a3-c00957ed032c?action=share&source=collection_link&creator=24929470"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const firebaseApiKey = pm.environment.get(\"firebaseAPIKey\");",
+									"const firebaseUserEmail = pm.environment.get(\"firebaseUserEmail\");",
+									"const firebaseUserPassword = pm.environment.get(\"firebaseUserPassword\");",
+									"",
+									"pm.sendRequest({",
+									"    url: \"https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=\" + firebaseApiKey,",
+									"    method: \"POST\",",
+									"    header: {",
+									"        \"Content-Type\": \"application/json\",",
+									"    },",
+									"    body: {",
+									"        mode: \"raw\",",
+									"        raw: JSON.stringify({",
+									"            email: firebaseUserEmail,",
+									"            password: firebaseUserPassword,",
+									"            returnSecureToken: true,",
+									"        }),",
+									"    },",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"        const firebaseIDToken = res.json().idToken;",
+									"        console.log(\"firebaseIDToken: \", firebaseIDToken);",
+									"        pm.environment.set(\"firebaseIDToken\", firebaseIDToken);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jwt = pm.response.text();",
+									"pm.environment.set(\"jwt\", jwt)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firebaseIDToken\": \"{{firebaseIDToken}}\",\n    \"walletAddress\": \"0x2caeb0334834eb8d0db1aee749800c6025a7b141\",\n    \"phoneNumber\": \"+447917959199\",\n    \"referralId\": \"+447917959199\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDYyNGFlOTMxMDRiYjQ4MDc2NzIwMSIsImlhdCI6MTY3ODEyOTY1NiwiZXhwIjoxNjgwNzIxNjU2fQ.PF5aheAYFwePJxQ09kHHqggDyorIP5thz82ttxMf4H4",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDYyNGFlOTMxMDRiYjQ4MDc2NzIwMSIsImlhdCI6MTY3ODEyOTY1NiwiZXhwIjoxNjgwNzIxNjU2fQ.PF5aheAYFwePJxQ09kHHqggDyorIP5thz82ttxMf4H4",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/user",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Embedder-Policy",
+									"value": "require-corp"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "212"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d4-VzQ8glcbk2sHP8aZOKewngpXdYo\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 02 Oct 2023 08:11:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"referralId\": \"\",\n    \"_id\": \"65156d7799eb55277e18f36c\",\n    \"__v\": 0,\n    \"createdAt\": \"2023-09-28T12:11:35.447Z\",\n    \"fcmTokens\": [],\n    \"updatedAt\": \"2023-10-02T08:11:00.090Z\",\n    \"walletAddress\": \"0x302CB015D4CB5c8F73AbcBA22C4E55794926f6b8\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isUsingAccountAbstractionWallet\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete FCM token",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fcmToken\": \"fFtHrh1ZSeuusM4sYq7DpD:APA91bHjCLFk2r9TP4exSyvQUdmufGFMKfpIAI_GPW4_7yOOeGkWwdzDqTUqZgHo5UcsjTpgC_LY4CMa8dhI5YwhEJmKWl-rypMiyVxB-PQI26b0AxNSBKV3X_ugc89VtTZwzQ3j01UB\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/user/fcmToken",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user",
+								"fcmToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "Upload image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/upload/images",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"upload",
+								"images"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Check health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/health",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
