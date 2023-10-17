@@ -34,6 +34,14 @@ To start, create a copy of the `.env.example` file and name it `.env` by running
 
 Set `JWT_SECRET` - A random string private key. 
 
+Each service has its own `.env` file. So, whenever you want to add a new environment variable, you should add it into the corresponding `.env` file.
+To keep things simple, you can add your new variable into the `.env` in the root
+and use the command below to sync all `.env` files.
+
+```
+cp .env apps/api-gateway-service/.env && cp .env apps/auth-service/.env && cp .env apps/notification-service/.env && cp .env apps/user-service/.env
+```
+
 >**Never reveal that to the public or inject inside the JWT token.**
 
 Next, we need to add our Firebase project values, which can be found in the previously downloaded JSON file.
