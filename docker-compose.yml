@@ -102,15 +102,5 @@ services:
     restart: always
     volumes:
       - ./data:/data/db
-  redis:
-    container_name: redis
-    image: redis
-    ports:
-      - '6379:6379'
-    networks:
-      - backend
-    restart: always
-    volumes:
-      - ./data:/data/redis
 networks:
   backend:
