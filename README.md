@@ -81,6 +81,9 @@ $ yarn docker:debug
 $ yarn docker:staging
 ```
 
+## Testing the endpoints
+To test the endpoints, you can import [this](docs/postman/Fuse%20Wallet%20Backend.postman_collection.json) Postman collection.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
