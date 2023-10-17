@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { map, lastValueFrom, catchError } from 'rxjs';
 
 @Injectable()
-export default class ChargeService {
+export default class FuseService {
   private readonly baseUrl: string;
   private readonly secretKey: string;
   private readonly publicApiKey: string;

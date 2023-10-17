@@ -8,7 +8,7 @@ import {
 import { Injectable } from '@nestjs/common';
 import { UserClientProxy } from 'lib/common/src/client-proxies';
 import { LoginUserDto } from 'lib/common/src/dtos';
-import ChargeService from 'lib/common/src/services/charge.service';
+import FuseService from 'lib/common/src/services/fuse.service';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,7 @@ export class AuthService {
     private readonly firebaseAuthProvider: FirebaseAuthProvider,
     private readonly jwtService: JwtService,
     private readonly userClientProxy: UserClientProxy,
-    private readonly chargeService: ChargeService,
+    private readonly fuseService: FuseService,
   ) {}
 
   async loginUser({ walletAddress, firebaseIDToken }: LoginUserDto) {
@@ -37,7 +37,7 @@ export class AuthService {
 
       // TODO: add a retry job queue
       if (!existingUser && createdOrUpdatedUser) {
-        await this.chargeService.subscribeToNotifications([
+        await this.fuseService.subscribeToNotifications([
           createdOrUpdatedUser.walletAddress,
         ]);
       }
@@ -47,7 +47,7 @@ export class AuthService {
         existingUser &&
         createdOrUpdatedUser.walletAddress !== existingUser.walletAddress
       ) {
-        await this.chargeService.unsubscribeFromNotifications([
+        await this.fuseService.unsubscribeFromNotifications([
           existingUser.walletAddress,
         ]);
       }

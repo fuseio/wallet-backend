@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { CommonAuthModule } from 'lib/common/src/auth/common-auth.module';
 import { UserClientModule } from 'lib/common/src/client-proxies';
-import ChargeService from 'lib/common/src/services/charge.service';
+import FuseService from 'lib/common/src/services/fuse.service';
 import FirebaseService from 'lib/common/src/services/firebase.service';
 import { FirebaseAuthProvider } from './auth-providers/firebase.auth-provider';
 import { AuthController } from './auth.controller';
@@ -30,7 +30,7 @@ import { AuthService } from './auth.service';
     FirebaseService,
     FirebaseAuthProvider,
     AuthService,
-    ChargeService,
+    FuseService,
   ],
   exports: [],
 })

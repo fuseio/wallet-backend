@@ -9,13 +9,13 @@ import {
 import { AddFCMTokenDto } from 'lib/common/src/dtos/user/add-fcm-token.dto';
 import { DeleteFCMTokenDto } from 'lib/common/src/dtos/user/delete-fcm-token.dto';
 import UserRepository from 'lib/common/src/repositories/user.repository';
-import ChargeService from 'lib/common/src/services/charge.service';
+import FuseService from 'lib/common/src/services/fuse.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly chargeService: ChargeService,
+    private readonly fuseService: FuseService,
   ) {}
 
   createUser(createUserDto: CreateUserDto) {
@@ -47,7 +47,7 @@ export class UsersService {
 
       await this.userRepository.delete(id);
 
-      await this.chargeService.unsubscribeFromNotifications([
+      await this.fuseService.unsubscribeFromNotifications([
         user.walletAddress,
       ]);
 

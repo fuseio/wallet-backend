@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import ChargeService from 'lib/common/src/services/charge.service';
+import FuseService from 'lib/common/src/services/fuse.service';
 import {
   SubscribeTokenTransferDto,
   UnsubscribeTokenTransferDto,
@@ -8,15 +8,15 @@ import {
 
 @Injectable()
 export class SubscriptionsService {
-  constructor(private readonly chargeService: ChargeService) {}
+  constructor(private readonly fuseService: FuseService) {}
 
   @MessagePattern('subcribe_token_transfers')
   subscribeTokenTransfers({ walletAddress }: SubscribeTokenTransferDto) {
-    return this.chargeService.subscribeToNotifications([walletAddress]);
+    return this.fuseService.subscribeToNotifications([walletAddress]);
   }
 
   @MessagePattern('unsubcribe_token_transfers')
   unsubscribeTokenTransfers({ walletAddress }: UnsubscribeTokenTransferDto) {
-    return this.chargeService.unsubscribeFromNotifications([walletAddress]);
+    return this.fuseService.unsubscribeFromNotifications([walletAddress]);
   }
 }
