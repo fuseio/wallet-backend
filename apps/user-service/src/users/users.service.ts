@@ -44,12 +44,8 @@ export class UsersService {
   async deleteUser({ id }: DeleteUserDto) {
     try {
       const user = await this.getUser({ id });
-
       await this.userRepository.delete(id);
-
-      await this.fuseService.unsubscribeFromNotifications([
-        user.walletAddress,
-      ]);
+      await this.fuseService.unsubscribeFromNotifications([user.walletAddress]);
 
       return true;
     } catch (error) {
